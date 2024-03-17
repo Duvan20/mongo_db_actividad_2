@@ -446,6 +446,121 @@ db.users.insertOne( {
     "weight": 71
 });
 
+db.users.insertMany(
+    [
+        {
+            "name": "Juan",
+            "lastname": "Martinez",
+            "email": "juan.martinez@example.com",
+            "city": "Barquisimeto",
+            "country": "Venezuela",
+            "salary": 55000,
+            "age": 30,
+            "height": 180,
+            "weight": 75
+        },
+        {
+            "name": "Ana",
+            "lastname": "Gonzalez",
+            "email": "ana.gonzalez@example.com",
+            "city": "Maracaibo",
+            "country": "Venezuela",
+            "salary": 48000,
+            "age": 28,
+            "height": 165,
+            "weight": 55
+        },
+        {
+            "name": "Pedro",
+            "lastname": "Ramirez",
+            "email": "pedro.ramirez@example.com",
+            "city": "Valencia",
+            "country": "Venezuela",
+            "salary": 62000,
+            "age": 35,
+            "height": 175,
+            "weight": 80
+        },
+        {
+            "name": "Sofia",
+            "lastname": "Fernandez",
+            "email": "sofia.fernandez@example.com",
+            "city": "Caracas",
+            "country": "Venezuela",
+            "salary": 58000,
+            "age": 27,
+            "height": 168,
+            "weight": 63
+        },
+        {
+            "name": "Luis",
+            "lastname": "Perez",
+            "email": "luis.perez@example.com",
+            "city": "Merida",
+            "country": "Venezuela",
+            "salary": 53000,
+            "age": 32,
+            "height": 172,
+            "weight": 70
+        },
+        {
+            "name": "Laura",
+            "lastname": "Sanchez",
+            "email": "laura.sanchez@example.com",
+            "city": "Maracay",
+            "country": "Venezuela",
+            "salary": 60000,
+            "age": 29,
+            "height": 170,
+            "weight": 58
+        },
+        {
+            "name": "Carlos",
+            "lastname": "Gutierrez",
+            "email": "carlos.gutierrez@example.com",
+            "city": "Carupano",
+            "country": "Venezuela",
+            "salary": 51000,
+            "age": 31,
+            "height": 178,
+            "weight": 73
+        },
+        {
+            "name": "Mariana",
+            "lastname": "Torres",
+            "email": "mariana.torres@example.com",
+            "city": "San Cristobal",
+            "country": "Venezuela",
+            "salary": 57000,
+            "age": 26,
+            "height": 163,
+            "weight": 52
+        },
+        {
+            "name": "Gabriel",
+            "lastname": "Diaz",
+            "email": "gabriel.diaz@example.com",
+            "city": "Puerto La Cruz",
+            "country": "Venezuela",
+            "salary": 54000,
+            "age": 33,
+            "height": 176,
+            "weight": 78
+        },
+        {
+            "name": "Valeria",
+            "lastname": "Alvarez",
+            "email": "valeria.alvarez@example.com",
+            "city": "Barcelona",
+            "country": "Venezuela",
+            "salary": 59000,
+            "age": 34,
+            "height": 167,
+            "weight": 65
+        }
+    ]
+    
+)
 
 //------------------------------------------------------Delete----------------------------------------------
 
@@ -460,7 +575,6 @@ db.users.deleteMany({
 })
 
 //Borrar todos los usuarios que viven en "París".
-
 db.users.deleteMany({
     city: "París"
 })
@@ -566,8 +680,6 @@ db.users.deleteMany({
 
 //-----------------------------------------------------UPDATE----------------------------------------------------------
 
-
-db.users.find()
 //Incrementar el salario de todos los usuarios en un 10%
 db.users.updateMany({},{ $mul: { salary: 1.1 } })
 
@@ -591,11 +703,119 @@ db.users.updateMany(
     }}
 );
 
-
 //Actualizar la edad del usuario con correo electrónico "ejemplo@correo.com" a 35 años.
 db.users.updateMany(
     {email: {$eq:"ejemplo@correo.com" }},
     {$set:{
         age:35
+    }}
+);
+
+//Cambiar el país de residencia de los usuarios que son de "Mexico" a "Canada".
+db.users.updateMany(
+    {country:{$eq: "Mexico"}},
+    {$set:{
+        country: "Canada"
+    }}
+);
+
+//Aumentar la altura de todos los usuarios en 5 centímetros.
+db.users.updateMany({},{$mul:{height:5.1}});
+//or
+db.users.updateMany({},{$inc:{height:5}});
+
+//Cambiar el apellido del usuario con correo electrónico "otro@ejemplo.com" a "González".
+db.users.updateMany(
+    {email:{$eq:"otro@ejemplo.com"}},
+    {$set:{
+        lastname: "González"
+    }}
+);
+
+//Actualizar el peso del usuario con nombre "Maria" a 140 libras.
+db.users.updateMany(
+    {name:{$eq: "Maria"}},
+    {$set:{
+        weight: 60
+    }}
+);
+
+//Incrementar el salario de todos los usuarios que son de "Estados Unidos" en un 15%.
+db.users.updateMany({country: "Estados Unidos"},{$mul:{salary: 1.15}});
+
+//Actualizar el correo electrónico del usuario con nombre "Pedro" a "nuevo_correo@riwi.co".
+db.users.updateMany(
+    {name: {$eq: "Pedro"}},
+    {$set:{
+        email: "nuevo_correo@riwi.co"
+    }}
+);
+
+//Cambiar la edad de todos los usuarios menores de 30 años a 30 años.
+db.users.updateMany(
+    {age: {$lt: 30}},
+    {$set:{
+        age: 30
+    }}
+);
+
+//Incrementar el salario de los usuarios que tienen un salario inferior a 3000 dólares en un 20%.
+db.users.updateMany(
+    {salary:{$lt 3000}},
+    {$mul:{salary: 1.20}}
+);
+
+//Actualizar la ciudad de residencia de todos los usuarios que actualmente viven en "Bogotá" a "Medellín".
+db.users.updateMany(
+    {city: {$eq: "Bogota"}},
+    {$set:{
+        city: "Medellin"
+    }}
+);
+
+//Cambiar el país de residencia de los usuarios con un salario superior a 5000 dólares a "Australia".
+db.users.updateMany(
+    {salary:{$gt:5000}},
+    {$set:{
+        country: "Australia"
+    }}
+);
+
+//Reducir la edad de todos los usuarios que tienen más de 50 años en 5 años.
+db.users.updateMany({age: {$gt:50}},{$inc:{age: -5}});
+
+//Actualizar el peso de los usuarios que pesan más de 200 libras a 180 libras.
+db.users.updateMany(
+    {weight:{$gt:100}},
+    {$set{
+        weight: 180
+    }}
+);
+
+//Incrementar el salario de los usuarios que viven en "London" en un 25%.
+db.users.updateMany({city: "London"},{$mul: {salary: 1.25}});
+
+//Cambiar el apellido de los usuarios con un salario superior a 4000 dólares a "Smith".
+db.users.updateMany(
+    {salary:{$gt: 4000}},
+    {$set:{
+        lastname: "Smith"
+    }}
+);
+
+//Actualizar el correo electrónico de todos los usuarios cuyo nombre empiece por "A" a "nuevo@riwi.es".
+db.users.updateMany(
+    {name:{$regex: "/^A/i"}},
+    {$set:{
+        email: "nuevo@riwi.es"
+    }}
+);
+
+
+//Cambiar la ciudad de residencia de los usuarios con una altura inferior a 160 centímetros a "París".
+db.users.updateMany(
+    {height:{$lt: "160"}},
+    {$set:{
+        city: "Paris"
     }}
 );
